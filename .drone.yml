@@ -1,0 +1,11 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: test
+  image: loongcr.lcpu.dev/lcpu/archlinux
+  commands:
+  - cd glibc
+  - pacman -S gd git python
+  - makepkg -CL --nocheck
