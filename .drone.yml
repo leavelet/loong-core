@@ -7,5 +7,9 @@ steps:
   image: loongcr.lcpu.dev/lcpu/archlinux
   commands:
   - cd glibc
-  - pacman -S --noconfirm --needed gd git python
-  - makepkg -CL --nocheck
+  - pacman -S --noconfirm --needed gd git python sudo
+  - useradd builduser -m
+  - passwd -d builduser
+  - printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers # Allow the builduser passwordless sudo
+  - echo $(pwd)
+  - sudo -u builduser bash -c 'cd $(pwd) && makepkg -CL --nocheck'
