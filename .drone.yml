@@ -7,5 +7,5 @@ steps:
   image: loongcr.lcpu.dev/lcpu/archlinux
   commands:
   - cd glibc
-  - pacman -S gd git python
+  - pacman -S --noconfirm --needed gd git python
   - makepkg -CL --nocheck
