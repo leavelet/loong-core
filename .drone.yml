@@ -8,8 +8,7 @@ steps:
   commands:
   - cd glibc
   - pacman -S --noconfirm --needed gd git python sudo fakeroot base-devel
+  - echo 'MAKEFLAGS="-j4"' | sudo tee -a /etc/makepkg.conf
   - useradd builduser -m
-  - passwd -d builduser
-  - printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers # Allow the builduser passwordless sudo
   - chown -R builduser /drone/src/
-  - sudo -u builduser bash -c 'export MAKEARGS="-j 4" && cd $(pwd) && makepkg -CL --nocheck'
+  - sudo -u builduser bash -c 'cd $(pwd) && makepkg -CL --nocheck'
