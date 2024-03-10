@@ -5,8 +5,6 @@ name: default
 steps:
 - name: test
   image: loongcr.lcpu.dev/lcpu/archlinux
-  environment:
-    MAKEARGS: "-j 4"
   commands:
   - cd glibc
   - pacman -S --noconfirm --needed gd git python sudo fakeroot base-devel
@@ -14,4 +12,4 @@ steps:
   - passwd -d builduser
   - printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers # Allow the builduser passwordless sudo
   - chown -R builduser /drone/src/
-  - sudo -u builduser bash -c 'cd $(pwd) && makepkg -CL --nocheck'
+  - sudo -u builduser bash -c 'cd $(pwd) && MAKEARGS="-j 4" makepkg -CL --nocheck'
